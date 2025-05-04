@@ -3,22 +3,698 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>Ma Première Page</title>
+    <title>CV - Hani WANICE</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --primary: #1d4ed8;
+            --primary-light: #3b82f6;
+            --secondary: #475569;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --accent: #4f46e5;
+            --border: #e5e7eb;
+            --success: #10b981;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--dark);
+            background: var(--light);
+            line-height: 1.5;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .cv-container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            overflow: hidden;
+        }
+        
+        .sidebar {
+            background: #f9fafb;
+            padding: 30px;
+            border-right: 1px solid var(--border);
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            padding: 30px;
+            color: white;
+            grid-column: span 2;
+        }
+        
+        .name {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+        
+        .title {
+            font-size: 1rem;
+            font-weight: 400;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+        
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            margin-top: 20px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            transition: transform 0.2s;
+        }
+        
+        .contact-item:hover {
+            transform: translateX(4px);
+        }
+        
+        .contact-item i {
+            font-size: 1rem;
+            color: var(--light);
+        }
+        
+        .contact-item a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+        
+        .contact-item a:hover {
+            opacity: 0.85;
+        }
+        
+        main {
+            padding: 30px;
+        }
+        
+        section {
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 8px;
+        }
+        
+        .section-title i {
+            font-size: 1.2rem;
+        }
+        
+        .bio {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--secondary);
+        }
+        
+        .education-item, .project-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+        
+        .education-item:hover, .project-item:hover {
+            background: rgba(59, 130, 246, 0.05);
+        }
+        
+        .edu-title, .project-title {
+            font-weight: 600;
+            font-size: 1.05rem;
+            margin-bottom: 4px;
+            color: var(--dark);
+        }
+        
+        .edu-place, .project-type {
+            font-weight: 500;
+            font-size: 0.95rem;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+        
+        .edu-date, .project-date {
+            font-size: 0.85rem;
+            color: var(--secondary);
+            margin-bottom: 6px;
+        }
+        
+        .edu-desc, .project-desc {
+            font-size: 0.9rem;
+            color: var(--secondary);
+        }
+        
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+        
+        .skill-group {
+            margin-bottom: 20px;
+        }
+        
+        .skill-title {
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--dark);
+        }
+        
+        .skill-item {
+            margin-bottom: 15px;
+            position: relative;
+        }
+        
+        .skill-name {
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+        
+        .skill-level {
+            font-size: 0.8rem;
+            color: var(--secondary);
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+        
+        .skill-circle {
+            width: 60px;
+            height: 60px;
+            position: relative;
+        }
+        
+        .skill-circle svg {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+        
+        .skill-circle circle {
+            fill: none;
+            stroke-width: 6;
+        }
+        
+        .skill-circle .bg {
+            stroke: var(--border);
+        }
+        
+        .skill-circle .progress {
+            stroke: var(--primary);
+            stroke-linecap: round;
+            transition: stroke-dashoffset 0.5s ease;
+        }
+        
+        .languages {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        
+        .language-item {
+            background: rgba(59, 130, 246, 0.1);
+            padding: 8px 12px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: transform 0.2s;
+        }
+        
+        .language-item:hover {
+            transform: translateY(-2px);
+        }
+        
+        .language-name {
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        .language-level {
+            font-size: 0.8rem;
+            color: var(--secondary);
+        }
+        
+        .project-details {
+            padding-left: 12px;
+            list-style: none;
+        }
+        
+        .project-details li {
+            margin-bottom: 6px;
+            position: relative;
+            padding-left: 16px;
+            font-size: 0.9rem;
+            color: var(--secondary);
+        }
+        
+        .project-details li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+        
+        .strengths {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .strength-item {
+            background: rgba(59, 130, 246, 0.05);
+            padding: 12px;
+            border-radius: 6px;
+            border-left: 3px solid var(--primary);
+            transition: transform 0.2s;
+        }
+        
+        .strength-item:hover {
+            transform: translateY(-2px);
+        }
+        
+        .strength-title {
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+        }
+        
+        .cert-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            padding: 12px;
+            background: rgba(59, 130, 246, 0.05);
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+        
+        .cert-item:hover {
+            background: rgba(59, 130, 246, 0.1);
+        }
+        
+        .cert-icon {
+            color: var(--primary);
+            font-size: 1.4rem;
+        }
+        
+        .cert-details h4 {
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+        }
+        
+        .cert-details p {
+            font-size: 0.85rem;
+            color: var(--secondary);
+        }
+        
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: background 0.2s, transform 0.2s;
+            margin-top: 20px;
+        }
+        
+        .download-btn:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+        }
+        
+        @media (max-width: 900px) {
+            .cv-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+            }
+            
+            header {
+                padding: 20px;
+            }
+            
+            .name {
+                font-size: 1.8rem;
+            }
+            
+            main {
+                padding: 20px;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            
+            .contact-info {
+                grid-template-columns: 1fr;
+            }
+            
+            .skills-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .strengths {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        section {
+            animation: fadeIn 0.5s ease-out;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
 </head>
 <body>
-    <div class="container">
-        <section class="card1">
-            <div class="profil">
-
+    <div class="cv-container">
+        <header>
+            <h1 class="name">Hani WANICE</h1>
+            <p class="title">Étudiant en informatique — Développement web & logiciel</p>
+            
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Créteil, France</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <a href="tel:0783636058">07 83 63 60 58</a>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <a href="mailto:haniwanice@gmail.com">haniwanice@gmail.com</a>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-globe"></i>
+                    <a href="https://haniwanice.com" target="_blank">haniwanice.com</a>
+                </div>
+                <div class="contact-item">
+                    <i class="fab fa-github"></i>
+                    <a href="#" target="_blank">GitHub</a>
+                </div>
+                <div class="contact-item">
+                    <i class="fab fa-linkedin"></i>
+                    <a href="#" target="_blank">LinkedIn</a>
+                </div>
             </div>
-            <h1>Hani</h1>
-            <div class="description">
-                <p>Développeur Web passionné.</p>
-                <p>Spécialiste en Frontend & UI Design.</p>
-            </div>
-            <button>Hire</button>
-        </section>
+        </header>
+        
+        <div class="sidebar">
+            <section>
+                <div class="section-title">
+                    <i class="fas fa-tools"></i>
+                    <h2>Compétences</h2>
+                </div>
+                
+                <div class="skills-container">
+                    <div class="skill-group">
+                        <h3 class="skill-title">Développement web</h3>
+                        <div class="skill-item">
+                            <div class="skill-name">HTML / CSS</div>
+                            <div class="skill-level">Intermédiaire</div>
+                            <div class="skill-circle">
+                                <svg>
+                                    <circle class="bg" cx="30" cy="30" r="27"></circle>
+                                    <circle class="progress" cx="30" cy="30" r="27" stroke-dasharray="170" stroke-dashoffset="51"></circle>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">JavaScript</div>
+                            <div class="skill-level">Débutant</div>
+                            <div class="skill-circle">
+                                <svg>
+                                    <circle class="bg" cx="30" cy="30" r="27"></circle>
+                                    <circle class="progress" cx="30" cy="30" r="27" stroke-dasharray="170" stroke-dashoffset="85"></circle>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">SQL / MySQL</div>
+                            <div class="skill-level">Intermédiaire</div>
+                            <div class="skill-circle">
+                                <svg>
+                                    <circle class="bg" cx="30" cy="30" r="27"></circle>
+                                    <circle class="progress" cx="30" cy="30" r="27" stroke-dasharray="170" stroke-dashoffset="59.5"></circle>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="skill-group">
+                        <h3 class="skill-title">Langages</h3>
+                        <div class="skill-item">
+                            <div class="skill-name">Python</div>
+                            <div class="skill-level">Intermédiaire</div>
+                            <div class="skill-circle">
+                                <svg>
+                                    <circle class="bg" cx="30" cy="30" r="27"></circle>
+                                    <circle class="progress" cx="30" cy="30" r="27" stroke-dasharray="170" stroke-dashoffset="51"></circle>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">Java</div>
+                            <div class="skill-level">Intermédiaire</div>
+                            <div class="skill-circle">
+                                <svg>
+                                    <circle class="bg" cx="30" cy="30" r="27"></circle>
+                                    <circle class="progress" cx="30" cy="30" r="27" stroke-dasharray="170" stroke-dashoffset="59.5"></circle>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">C</div>
+                            <div class="skill-level">Débutant</div>
+                            <div class="skill-circle">
+                                <svg>
+                                    <circle class="bg" cx="30" cy="30" r="27"></circle>
+                                    <circle class="progress" cx="30" cy="30" r="27" stroke-dasharray="170" stroke-dashoffset="102"></circle>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="skill-group">
+                        <h3 class="skill-title">Outils</h3>
+                        <div class="skill-item">
+                            <div class="skill-name">Git / GitHub</div>
+                            <div class="skill-level">Débutant</div>
+                            <div class="skill-circle">
+                                <svg>
+                                    <circle class="bg" cx="30" cy="30" r="27"></circle>
+                                    <circle class="progress" cx="30" cy="30" r="27" stroke-dasharray="170" stroke-dashoffset="93.5"></circle>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">Linux</div>
+                            <div class="skill-level">Intermédiaire</div>
+                            <div class="skill-circle">
+                                <svg>
+                                    <circle class="bg" cx="30" cy="30" r="27"></circle>
+                                    <circle class="progress" cx="30" cy="30" r="27" stroke-dasharray="170" stroke-dashoffset="68"></circle>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">Figma, VS Code</div>
+                            <div class="skill-level">Avancé</div>
+                            <div class="skill-circle">
+                                <svg>
+                                    <circle class="bg" cx="30" cy="30" r="27"></circle>
+                                    <circle class="progress" cx="30" cy="30" r="27" stroke-dasharray="170" stroke-dashoffset="25.5"></circle>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section>
+                <div class="section-title">
+                    <i class="fas fa-globe"></i>
+                    <h2>Langues</h2>
+                </div>
+                <div class="languages">
+                    <div class="language-item">
+                        <i class="fas fa-flag"></i>
+                        <div>
+                            <div class="language-name">Français</div>
+                            <div class="language-level">Natif</div>
+                        </div>
+                    </div>
+                    <div class="language-item">
+                        <i class="fas fa-flag"></i>
+                        <div>
+                            <div class="language-name">Anglais</div>
+                            <div class="language-level">B2</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section>
+                <div class="section-title">
+                    <i class="fas fa-certificate"></i>
+                    <h2>Certifications</h2>
+                </div>
+                <div class="cert-item">
+                    <div class="cert-icon">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <div class="cert-details">
+                        <h4>FreeCodeCamp – Responsive Web Design</h4>
+                        <p>Formation HTML/CSS (40h)</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+        
+        <main>
+            <section>
+                <div class="section-title">
+                    <i class="fas fa-user"></i>
+                    <h2>Profil</h2>
+                </div>
+                <p class="bio">
+                    Étudiant en informatique passionné, je développe des projets web et logiciels en HTML, CSS, JavaScript et Python. Autodidacte et méthodique, j'ai réalisé des sites dynamiques, des jeux interactifs et contribué à des maquettes d'applications mobiles. Mon objectif est d'intégrer une équipe pour perfectionner mes compétences, assimiler les bonnes pratiques et contribuer à des projets concrets.
+                </p>
+                <a href="#" class="download-btn">
+                    <i class="fas fa-download"></i>
+                    Télécharger en PDF
+                </a>
+            </section>
+            
+            <section>
+                <div class="section-title">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h2>Formation</h2>
+                </div>
+                <div class="education-item">
+                    <h3 class="edu-title">Licence 2 Informatique</h3>
+                    <div class="edu-place">Université Paris-Est Créteil</div>
+                    <div class="edu-date">2023 - Présent</div>
+                    <p class="edu-desc">
+                        Cours : Algorithmique, Bases de données, Systèmes d'exploitation, Développement web<br>
+                        Activités : Projets en groupe, exposés techniques
+                    </p>
+                </div>
+                <div class="education-item">
+                    <h3 class="edu-title">Baccalauréat Général</h3>
+                    <div class="edu-place">Spécialités : NSI, Maths, SI</div>
+                    <div class="edu-date">2022</div>
+                </div>
+                <div class="education-item">
+                    <h3 class="edu-title">Stage d'observation</h3>
+                    <div class="edu-place">Start-up Web</div>
+                    <div class="edu-date">1 semaine</div>
+                    <p class="edu-desc">
+                        Découverte des méthodes agiles, wireframing et bases du développement front-end
+                    </p>
+                </div>
+            </section>
+            
+            <section>
+                <div class="section-title">
+                    <i class="fas fa-code-branch"></i>
+                    <h2>Projets</h2>
+                </div>
+                <div class="project-item">
+                    <h3 class="project-title">Site web dynamique</h3>
+                    <div class="project-type">Projet universitaire</div>
+                    <div class="project-date">3 semaines – 16/20</div>
+                    <ul class="project-details">
+                        <li>Site responsive avec base de données MySQL</li>
+                        <li>Gestion CRUD des utilisateurs</li>
+                        <li>Technologies : HTML, CSS, JavaScript, PHP</li>
+                    </ul>
+                </div>
+                <div class="project-item">
+                    <h3 class="project-title">Mini-jeu JavaScript</h3>
+                    <div class="project-type">Projet personnel</div>
+                    <div class="project-date">2024</div>
+                    <ul class="project-details">
+                        <li>Jeu interactif avec événements DOM</li>
+                        <li>Interface responsive</li>
+                        <li>Objectif : Maîtrise de la logique front-end</li>
+                    </ul>
+                </div>
+                <div class="project-item">
+                    <h3 class="project-title">Design d'application mobile</h3>
+                    <div class="project-type">Projet bénévole</div>
+                    <div class="project-date">2025</div>
+                    <ul class="project-details">
+                        <li>Collaboration sur un MVP d'application</li>
+                        <li>Wireframing et prototypage sur Figma</li>
+                        <li>Réflexion UX/UI</li>
+                    </ul>
+                </div>
+            </section>
+            
+            <section>
+                <div class="section-title">
+                    <i class="fas fa-lightbulb"></i>
+                    <h2>Points forts</h2>
+                </div>
+                <div class="strengths">
+                    <div class="strength-item">
+                        <h3 class="strength-title">Autonomie</h3>
+                        <p>Réalisation de projets personnels (FreeCodeCamp, mini-jeu JS)</p>
+                    </div>
+                    <div class="strength-item">
+                        <h3 class="strength-title">Sens pratique</h3>
+                        <p>Support technique pour l'entourage (OS, matériel)</p>
+                    </div>
+                    <div class="strength-item">
+                        <h3 class="strength-title">Veille technologique</h3>
+                        <p>Apprentissage via YouTube, FreeCodeCamp, Medium</p>
+                    </div>
+                </div>
+            </section>
+        </main>
     </div>
 </body>
 </html>
